@@ -17,12 +17,12 @@ export const build = async (client: Client, src = ".") => {
     .pipeline(Job.build)
     .container()
     .from("openjdk:22-slim-bookworm")
-    .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
     .withExec(["apt-get", "update"])
     .withExec(["apt-get", "install", "-y", "wget", "build-essential"])
     .withExec(["wget", "-O", "/usr/local/bin/bazelisk", BAZEL_LINK])
     .withExec(["chmod", "+x", "/usr/local/bin/bazelisk"])
     .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
+    .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
     .withDirectory("/app", context, {
       exclude,
     })
