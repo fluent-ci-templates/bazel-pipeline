@@ -10,8 +10,8 @@ export default function pipeline(src = ".", args: string[] = []) {
       return;
     }
 
-    await build(client, src);
     await test(client, src);
+    await build(client, src);
   });
 }
 
