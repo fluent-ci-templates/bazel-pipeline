@@ -5,6 +5,8 @@ export enum Job {
   test = "test",
 }
 
+const BAZEL_VERSION = Deno.env.get("BAZEL_VERSION") || "6.3.2";
+
 const BAZEL_LINK =
   "https://github.com/bazelbuild/bazelisk/releases/download/v1.18.0/bazelisk-linux-amd64";
 const exclude = [".fluentci", ".git", "target"];
@@ -15,6 +17,7 @@ export const build = async (client: Client, src = ".") => {
     .pipeline(Job.build)
     .container()
     .from("openjdk:22-slim-bookworm")
+    .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
     .withExec(["apt-get", "update"])
     .withExec(["apt-get", "install", "-y", "wget"])
     .withExec(["wget", "-O", "/usr/local/bin/bazelisk", BAZEL_LINK])
@@ -42,8 +45,10 @@ export const test = async (client: Client, src = ".") => {
     .withExec(["wget", "-O", "/usr/local/bin/bazelisk", BAZEL_LINK])
     .withExec(["chmod", "+x", "/usr/local/bin/bazelisk"])
     .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
+    .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
     .withDirectory("/app", context, { exclude })
     .withWorkdir("/app")
+    .withExec(["ls", "-la"])
     .withExec(["bazelisk", "test", "//..."]);
 
   const result = await ctr.stdout();
