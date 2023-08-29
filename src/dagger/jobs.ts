@@ -8,16 +8,15 @@ export enum Job {
 const BAZEL_LINK =
   "https://github.com/bazelbuild/bazelisk/releases/download/v1.18.0/bazelisk-linux-amd64";
 const exclude = [".fluentci", ".git", "target"];
-const packages = ["bash", "wget", "openjdk11"];
 
 export const build = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
   const ctr = client
     .pipeline(Job.build)
     .container()
-    .from("alpine")
-    .withExec(["apk", "update"])
-    .withExec(["apk", "add", ...packages])
+    .from("openjdk:22-slim-bookworm")
+    .withExec(["apt-get", "update"])
+    .withExec(["apt-get", "install", "-y", "wget"])
     .withExec(["wget", "-O", "/usr/local/bin/bazelisk", BAZEL_LINK])
     .withExec(["chmod", "+x", "/usr/local/bin/bazelisk"])
     .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
@@ -37,8 +36,9 @@ export const test = async (client: Client, src = ".") => {
   const ctr = client
     .pipeline(Job.test)
     .container()
-    .withExec(["apk", "update"])
-    .withExec(["apk", "add", ...packages])
+    .from("openjdk:22-slim-bookworm")
+    .withExec(["apt-get", "update"])
+    .withExec(["apt-get", "install", "-y", "wget"])
     .withExec(["wget", "-O", "/usr/local/bin/bazelisk", BAZEL_LINK])
     .withExec(["chmod", "+x", "/usr/local/bin/bazelisk"])
     .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
