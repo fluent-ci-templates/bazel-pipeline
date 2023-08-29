@@ -26,7 +26,6 @@ export const build = async (client: Client, src = ".") => {
     .withDirectory("/app", context, {
       exclude,
     })
-    .withFile("/app/Cargo.lock", context.file("Cargo.lock"))
     .withWorkdir("/app")
     .withExec(["bazelisk", "build", "//..."]);
 
@@ -48,7 +47,6 @@ export const test = async (client: Client, src = ".") => {
     .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
     .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
     .withDirectory("/app", context, { exclude })
-    .withFile("/app/Cargo.lock", context.file("Cargo.lock"))
     .withWorkdir("/app")
     .withExec(["ls", "-la"])
     .withExec(["bazelisk", "test", "//..."]);
