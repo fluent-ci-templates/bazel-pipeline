@@ -1,12 +1,13 @@
 # Azure Pipelines
 
-[![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fbase_pipeline&query=%24.version)](https://pkg.fluentci.io/base_pipeline)
+[![fluentci pipeline](https://img.shields.io/badge/dynamic/json?label=pkg.fluentci.io&labelColor=%23000&color=%23460cf1&url=https%3A%2F%2Fapi.fluentci.io%2Fv1%2Fpipeline%2Fbazel_pipeline&query=%24.version)](https://pkg.fluentci.io/bazel_pipeline)
 ![deno compatibility](https://shield.deno.dev/deno/^1.34)
+[![](https://img.shields.io/codecov/c/gh/fluent-ci-templates/bazel-pipeline)](https://codecov.io/gh/fluent-ci-templates/bazel-pipeline)
 
 The following command will generate a `azure-pipelines.yml` file in your project:
 
 ```bash
-fluentci ap init
+fluentci ap init -t bazel_pipeline
 ```
 
 Generated file:
@@ -32,7 +33,7 @@ steps:
         sudo mv bin/dagger /usr/local/bin
         dagger version
     displayName: Setup Dagger
-  - script: dagger run fluentci .
+  - script: fluentci run bazel_pipeline
     displayName: Run Dagger Pipelines
 
 ```

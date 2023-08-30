@@ -9,7 +9,15 @@ const BAZEL_VERSION = Deno.env.get("BAZEL_VERSION") || "6.3.2";
 
 const BAZEL_LINK =
   "https://github.com/bazelbuild/bazelisk/releases/download/v1.18.0/bazelisk-linux-amd64";
-const exclude = [".fluentci", ".git", "target"];
+const exclude = [
+  ".fluentci",
+  ".git",
+  "target",
+  "bazel-bin",
+  "bazel-example",
+  "bazel-out",
+  "bazel-testlogs",
+];
 
 export const build = async (client: Client, src = ".") => {
   const context = client.host().directory(src);
@@ -27,7 +35,8 @@ export const build = async (client: Client, src = ".") => {
       exclude,
     })
     .withWorkdir("/app")
-    .withExec(["bazelisk", "build", "//..."]);
+    .withExec(["bazelisk", "build", "//..."])
+    .withExec(["ls", "-la"]);
 
   const result = await ctr.stdout();
 
@@ -48,8 +57,8 @@ export const test = async (client: Client, src = ".") => {
     .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
     .withDirectory("/app", context, { exclude })
     .withWorkdir("/app")
-    .withExec(["ls", "-la"])
-    .withExec(["bazelisk", "test", "//..."]);
+    .withExec(["bazelisk", "test", "//..."])
+    .withExec(["ls", "-la"]);
 
   const result = await ctr.stdout();
 
