@@ -1,4 +1,4 @@
-import Client from "@dagger.io/dagger";
+import Client from "@fluentci.io/dagger";
 
 export enum Job {
   build = "build",
@@ -7,7 +7,7 @@ export enum Job {
 
 const BAZEL_VERSION = Deno.env.get("BAZEL_VERSION") || "6.3.2";
 
-const exclude = [
+export const exclude = [
   ".fluentci",
   ".git",
   "target",
