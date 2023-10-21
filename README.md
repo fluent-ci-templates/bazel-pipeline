@@ -8,13 +8,13 @@ A ready-to-use Pipeline for [Bazel](https://bazel.build/) projects.
 
 ## 🚀 Usage
 
-Run the following command in your project:
+Run the following command in your project :
 
 ```bash
 fluentci run bazel_pipeline
 ```
 
-Or, if you want to use it as a template:
+Or, if you want to use it as a template :
 
 ```bash
 fluentci init -t bazel
