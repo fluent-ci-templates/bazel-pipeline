@@ -1,0 +1,5 @@
+{
+  "root": "",
+  "name": "bazel",
+  "sdkRuntime": "tsiry/dagger-sdk-deno"
+}

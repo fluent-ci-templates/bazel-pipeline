@@ -46,15 +46,8 @@ dagger run fluentci .
 You can also use this pipeline programmatically:
 
 ```ts
-import Client, { connect } from "https://sdk.fluentci.io/v0.1.9/mod.ts";
-import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.2.1/mod.ts";
+import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.3.0/mod.ts";
 
-function pipeline(src = ".") {
-  connect(async (client: Client) => {
-    await test(client, src);
-    await build(client, src);
-  });
-}
-
-pipeline();
+await test();
+await build();
 ```
