@@ -11,7 +11,7 @@ A ready-to-use Pipeline for [Bazel](https://bazel.build/) projects.
 Run the following command in your project:
 
 ```bash
-dagger run fluentci bazel_pipeline
+fluentci run bazel_pipeline
 ```
 
 Or, if you want to use it as a template:
