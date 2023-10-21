@@ -43,7 +43,7 @@ dagger run fluentci .
 
 ## Programmatic usage
 
-You can also use this pipeline programmatically:
+You can also use this pipeline programmatically :
 
 ```ts
 import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.3.0/mod.ts";
