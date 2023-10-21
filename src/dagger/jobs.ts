@@ -31,7 +31,7 @@ export const build = async (src = ".", version?: string) => {
       .withWorkdir("/app")
       .withExec(["bazelisk", "build", "//..."])
       .withExec(["ls", "-la"])
-      .withExec(["sh", "-c", "mkdir -p output && cp bazel-bin/* output"]);
+      .withExec(["sh", "-c", "mkdir -p output && cp -r bazel-bin/* output"]);
 
     const result = await ctr.stdout();
 
