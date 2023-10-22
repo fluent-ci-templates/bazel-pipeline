@@ -41,6 +41,12 @@ dagger run fluentci .
 | build     | Build project |
 | test      | Run tests     |
 
+```graphql
+build(src: String!): String
+
+test(src: String!): String
+```
+
 ## Programmatic usage
 
 You can also use this pipeline programmatically :
