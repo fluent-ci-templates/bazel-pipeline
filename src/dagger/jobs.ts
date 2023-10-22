@@ -22,7 +22,7 @@ export const build = async (src = ".", version?: string) => {
     const ctr = client
       .pipeline(Job.build)
       .container()
-      .from("ghcr.io/fluent-ci-templates/bazel:latest")
+      .from("ghcr.io/fluentci-io/bazel:latest")
       .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
       .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
       .withDirectory("/app", context, {
@@ -49,7 +49,7 @@ export const test = async (src = ".", version?: string) => {
     const ctr = client
       .pipeline(Job.test)
       .container()
-      .from("ghcr.io/fluent-ci-templates/bazel:latest")
+      .from("ghcr.io/fluentci-io/bazel:latest")
       .withMountedCache("/root/.cache/bazel", client.cacheVolume("bazel-cache"))
       .withEnvVariable("BAZEL_VERSION", BAZEL_VERSION)
       .withDirectory("/app", context, { exclude })
