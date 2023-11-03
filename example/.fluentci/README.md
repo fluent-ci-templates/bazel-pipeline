@@ -8,13 +8,13 @@ A ready-to-use Pipeline for [Bazel](https://bazel.build/) projects.
 
 ## 🚀 Usage
 
-Run the following command in your project:
+Run the following command in your project :
 
 ```bash
-dagger run fluentci bazel_pipeline
+fluentci run bazel_pipeline
 ```
 
-Or, if you want to use it as a template:
+Or, if you want to use it as a template :
 
 ```bash
 fluentci init -t bazel
@@ -41,12 +41,18 @@ dagger run fluentci .
 | build     | Build project |
 | test      | Run tests     |
 
+```graphql
+build(src: String!): String
+
+test(src: String!): String
+```
+
 ## Programmatic usage
 
-You can also use this pipeline programmatically:
+You can also use this pipeline programmatically :
 
 ```ts
-import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.3.0/mod.ts";
+import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.3.1/mod.ts";
 
 await test();
 await build();
