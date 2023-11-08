@@ -1,8 +1,8 @@
 import { brightGreen, stringifyTree } from "../../deps.ts";
-import { runnableJobs, jobDescriptions, Job } from "./jobs.ts";
+import { runnableJobs, jobDescriptions, Job, pipelineName } from "./jobs.ts";
 
 const tree = {
-  name: brightGreen("bazel_pipeline"),
+  name: brightGreen(pipelineName),
   children: (Object.keys(runnableJobs) as Job[]).map((job) => ({
     name: jobDescriptions[job]
       ? `${brightGreen(job)} - ${jobDescriptions[job]}`

@@ -86,3 +86,5 @@ export const jobDescriptions: Record<Job, string> = {
   [Job.build]: "Build the project",
   [Job.test]: "Run tests",
 };
+
+export const pipelineName = "bazel_pipeline";
