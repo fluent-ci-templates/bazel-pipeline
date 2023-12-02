@@ -28,6 +28,14 @@ Now you can run the pipeline with:
 dagger run fluentci .
 ```
 
+## Dagger Module
+
+Use as a [Dagger](https://dagger.io) Module:
+
+```bash
+dagger mod install github.com/fluent-ci-templates/bazel-pipeline@mod
+```
+
 ## Environment variables
 
 | Variable            | Description                                      |
