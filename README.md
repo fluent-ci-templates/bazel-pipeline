@@ -41,10 +41,16 @@ dagger run fluentci .
 | build     | Build project |
 | test      | Run tests     |
 
-```graphql
-build(src: String!): String
+```typescript
+build(
+  src: Directory | string,
+  version?: string
+): Promise<Directory | string>
 
-test(src: String!): String
+test(
+  src: Directory | string,
+  version?: string
+): Promise<string>
 ```
 
 ## Programmatic usage
@@ -54,6 +60,6 @@ You can also use this pipeline programmatically :
 ```ts
 import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.4.0/mod.ts";
 
-await test();
-await build();
+await test(".");
+await build(".");
 ```
