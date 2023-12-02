@@ -1,5 +1,7 @@
 {
   bazel {
-    build(src: ".")
+    build(src: ".") {
+      id
+    }
   }
 }

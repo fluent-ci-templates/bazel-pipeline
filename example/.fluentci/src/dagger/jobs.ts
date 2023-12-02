@@ -1,4 +1,6 @@
-import Client, { connect } from "../../deps.ts";
+import Client, { Directory } from "../../deps.ts";
+import { connect } from "../../sdk/connect.ts";
+import { getDirectory } from "./lib.ts";
 
 export enum Job {
   build = "build",
@@ -15,10 +17,21 @@ export const exclude = [
   "bazel-testlogs",
 ];
 
-export const build = async (src = ".", version?: string) => {
+/**
+ * @function
+ * @description Build the project
+ * @param {string} src source directory
+ * @param {string} version bazel version to use
+ * @returns {Promise<string>}
+ */
+export async function build(
+  src: Directory | string,
+  version?: string
+): Promise<Directory | string> {
+  let id = "";
   await connect(async (client: Client) => {
     const BAZEL_VERSION = Deno.env.get("BAZEL_VERSION") || version || "6.3.2";
-    const context = client.host().directory(src);
+    const context = getDirectory(client, src);
     const ctr = client
       .pipeline(Job.build)
       .container()
@@ -37,15 +50,27 @@ export const build = async (src = ".", version?: string) => {
 
     console.log(result);
 
-    await ctr.directory("/app/output").export("output");
+    const output = ctr.directory("/app/output");
+    await output.export("output");
+    id = await output.id();
   });
-  return "Done";
-};
+  return id;
+}
 
-export const test = async (src = ".", version?: string) => {
+/**
+ * @function
+ * @description Run tests
+ * @param {string} src source directory
+ * @param {string} version bazel version to use
+ * @returns {Promise<string>}
+ */
+export async function test(
+  src: Directory | string,
+  version?: string
+): Promise<string> {
   await connect(async (client: Client) => {
     const BAZEL_VERSION = Deno.env.get("BAZEL_VERSION") || version || "6.3.2";
-    const context = client.host().directory(src);
+    const context = getDirectory(client, src);
     const ctr = client
       .pipeline(Job.test)
       .container()
@@ -62,20 +87,12 @@ export const test = async (src = ".", version?: string) => {
     console.log(result);
   });
   return "Done";
-};
+}
 
 export type JobExec = (
-  src?: string,
+  src: Directory | string,
   version?: string
-) =>
-  | Promise<string>
-  | ((
-      src?: string,
-      version?: string,
-      options?: {
-        ignore: string[];
-      }
-    ) => Promise<string>);
+) => Promise<Directory | string>;
 
 export const runnableJobs: Record<Job, JobExec> = {
   [Job.build]: build,
@@ -86,5 +103,3 @@ export const jobDescriptions: Record<Job, string> = {
   [Job.build]: "Build the project",
   [Job.test]: "Run tests",
 };
-
-export const pipelineName = "bazel_pipeline";

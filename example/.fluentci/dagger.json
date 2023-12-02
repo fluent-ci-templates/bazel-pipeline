@@ -1,5 +1,4 @@
 {
-  "root": "",
-  "name": "bazel",
-  "sdkRuntime": "tsiry/dagger-sdk-deno"
+  "name": "fastlane",
+  "sdk": "github.com/fluentci-io/daggerverse/deno-sdk@main"
 }
