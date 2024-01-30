@@ -25,7 +25,7 @@ This will create a `.fluentci` folder in your project.
 Now you can run the pipeline with:
 
 ```bash
-dagger run fluentci .
+fluentci run .
 ```
 
 ## Dagger Module
@@ -66,7 +66,7 @@ test(
 You can also use this pipeline programmatically :
 
 ```ts
-import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.5.0/mod.ts";
+import { test, build } from "https://pkg.fluentci.io/bazel_pipeline@v0.5.1/mod.ts";
 
 await test(".");
 await build(".");
